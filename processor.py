@@ -43,9 +43,9 @@ if __name__ == '__main__':
         # proceeding packages and getting receipts #
         packages_to_proceed = receiver.proceed(packages=packages_to_proceed)
         
-        # configuring window size / switching stages # 
+        # configuring window size / switching stages #
         if current_stage == 'EXP':
-            if is_all_packages_success(packages_to_proceed) and current_window_size != config.OVERFLOW_WINDOW_SIZE:
+            if is_all_packages_success(packages_to_proceed) and current_window_size != config.CAPACITY:
                 current_window_size *= 2
             else:
                 current_window_size //= 2
@@ -53,7 +53,7 @@ if __name__ == '__main__':
                 current_stage = 'ADD'
                 
         elif current_stage == 'ADD':
-            if is_all_packages_success(packages_to_proceed) and current_window_size != config.OVERFLOW_WINDOW_SIZE:
+            if is_all_packages_success(packages_to_proceed) and current_window_size != config.CAPACITY:
                 current_window_size += 1
             else:
                 current_window_size //= 2
