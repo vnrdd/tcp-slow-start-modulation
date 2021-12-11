@@ -21,29 +21,29 @@ def is_all_packages_success(packages):
 if __name__ == '__main__':
     current_window_size = config.START_WINDOW_SIZE
     window_size_history = []
-    packages_proceeded = 0
 
     current_stage = 'EXP'
     end_of_exp_stage = 0
     
     while packages:
         window_size_history.append(current_window_size)
-        upper_border_prediction = current_window_size
         
-        real_upper_border = upper_border_prediction
+        # calculate valid count of packages to send #
+        real_upper_border = current_window_size
         
         if real_upper_border >= len(packages):
             real_upper_border = len(packages)
         
-
+        # collecting packages to send #
         packages_to_proceed = [
             packages.pop(0)
             for _ in range(0, real_upper_border)
         ]
     
+        # proceeding packages and getting receipts #
         packages_to_proceed = receiver.proceed(packages=packages_to_proceed)
-        packages_proceeded += len(packages_to_proceed)
-
+        
+        # configuring window size / switching stages # 
         if current_stage == 'EXP':
             if is_all_packages_success(packages_to_proceed) and current_window_size != config.OVERFLOW_WINDOW_SIZE:
                 current_window_size *= 2
